@@ -1,24 +1,24 @@
-package Controller;
-import Model.Employee;
+package kg.neobis.Controller;
+import kg.neobis.Model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import repository.EmployeeRepository;
+import kg.neobis.repository.EmployeeRepos;
 
 @Controller
-@RequestMapping(path="/myproject")
+@RequestMapping(path="/pr")
 public class EmployeeController {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepos employeeRepository;
     @PostMapping
     public Employee create(@RequestBody Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    @PostMapping(path="/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser (@RequestParam String name
+    @PostMapping(path="/add")
+    public @ResponseBody String addNewEmployee (@RequestParam String name
             , @RequestParam String address,@RequestParam double salary,@RequestParam int age,@RequestParam String position) {
 
         Employee employee = new Employee();
@@ -31,7 +31,7 @@ public class EmployeeController {
         return "Saved";
     }
     @DeleteMapping(path = {"/{id}"})
-    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") int id) {
         return employeeRepository.findById(id)
                 .map(record -> {
                     employeeRepository.deleteById(id);
@@ -40,7 +40,7 @@ public class EmployeeController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Employee> update(@PathVariable("id") long id,
+    public ResponseEntity<Employee> update(@PathVariable("id") int id,
                                            @RequestBody Employee employee) {
         return employeeRepository.findById(id)
                 .map(record -> {
@@ -55,7 +55,7 @@ public class EmployeeController {
     }
 
     @GetMapping(path="/all")
-    public @ResponseBody Iterable<Employee> getAllUsers() {
+    public @ResponseBody Iterable<Employee> getAllEmployee() {
         return employeeRepository.findAll();
     }
 }

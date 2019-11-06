@@ -1,6 +1,4 @@
-package Model;
-
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+package kg.neobis.Model;
 
 import javax.persistence.*;
 
